@@ -13,7 +13,7 @@ def fib(n):
         return num
 
 print("5th Fibonacci´s term:", fib(5))
-print("11th Fibonacci´s term:", fib(11))
-print("55th Fibonacci´s term:", fib(55))
+print("10th Fibonacci´s term:", fib(10))
+print("15th Fibonacci´s term:", fib(15))
 
 

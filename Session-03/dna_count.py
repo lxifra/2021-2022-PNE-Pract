@@ -6,6 +6,5 @@ def count_bases(seq):
 
 dna_seq = input("Introduce the sequence: ")
 print("Total lenght: ", len(dna_seq))
-print(count_bases(dna_seq))
 for k, v in count_bases(dna_seq).items():
     print(k + ":", v)

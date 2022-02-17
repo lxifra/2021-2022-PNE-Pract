@@ -62,4 +62,20 @@ def seq_count(seq):
     new_dict = dict(zip(list_bases, list_count))
     return new_dict
 
+def seq_reverse(filename):
+    FOLDER = "./sequences/"
+    full_seq = open(FOLDER + filename, "r").read()
+    full_seq = full_seq[full_seq.find("\n"):].replace("\n", "")
+    seq = full_seq[0:20]
+    reverse_seq = seq[::-1]
+    return seq, reverse_seq
+
+def seq_complement(seq):
+    d = {"A": "T", "C": "G", "G": "C", "T": "A"}
+    i = 0
+    for k in d:
+        for b in seq:
+            if k == b:
+                b == d[k]
+    return seq
 

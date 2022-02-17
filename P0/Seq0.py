@@ -72,10 +72,8 @@ def seq_reverse(filename):
 
 def seq_complement(seq):
     d = {"A": "T", "C": "G", "G": "C", "T": "A"}
-    i = 0
-    for k in d:
-        for b in seq:
-            if k == b:
-                b == d[k]
-    return seq
+    new_seq = ""
+    for b in seq:
+        new_seq += d[b]
+    return new_seq
 

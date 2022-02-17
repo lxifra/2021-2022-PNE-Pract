@@ -1,5 +1,7 @@
 def generate_seqs(pattern, number):
-    hi = 0
+    list1 = []
+    list2 = []
+
 
 
 

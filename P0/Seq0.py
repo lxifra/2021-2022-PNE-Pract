@@ -1,7 +1,9 @@
-import Seq0
+
+#EXCERCISE 1:
 def seq_ping():
     print("OK")
 
+#EXCERCISE 2:
 def seq_read_fasta():
     exit = False
     while not exit:
@@ -15,6 +17,7 @@ def seq_read_fasta():
         except FileNotFoundError:
             print("File does not exist. Choose another file.")
 
+#EXCERCISE 3:
 def seq_len():
     list_genes = ["U5.txt", "ADA.txt", "FRAT1.txt", "FXN.txt"]
     list_lenght = []
@@ -27,7 +30,9 @@ def seq_len():
     gene_lenght = list(zip(list_genes, list_lenght))
     return gene_lenght
 
+#EXCERCISE 4:
 def seq_count_base(seq):
+    list_bases = ["A", "C", "G", "T"]
     count_a = 0
     count_c = 0
     count_g = 0
@@ -41,8 +46,11 @@ def seq_count_base(seq):
             count_g += 1
         elif b == "T":
             count_t += 1
-    return count_a, count_c, count_g, count_t
+    list_count = [count_a, count_c, count_g, count_t]
+    final_list = list(zip(list_count, list_bases))
+    return final_list
 
+#EXCERCISE 5:
 def seq_count(seq):
     list_bases = ["A", "C", "G", "T"]
     count_a = 0
@@ -62,6 +70,7 @@ def seq_count(seq):
     new_dict = dict(zip(list_bases, list_count))
     return new_dict
 
+#EXCERCISE 6:
 def seq_reverse(filename):
     FOLDER = "./sequences/"
     full_seq = open(FOLDER + filename, "r").read()
@@ -70,6 +79,7 @@ def seq_reverse(filename):
     reverse_seq = seq[::-1]
     return seq, reverse_seq
 
+#EXCERCISE 7:
 def seq_complement(seq):
     d = {"A": "T", "C": "G", "G": "C", "T": "A"}
     new_seq = ""

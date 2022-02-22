@@ -50,7 +50,7 @@ class Seq:
         count_t = 0
         if self.strbases == "NULL" or self.strbases == "ERROR":
             list_count = [count_a, count_c, count_g, count_t]
-            new_dict = dict(zip(list_bases, list_count))
+            new_list = list(zip(list_bases, list_count))
         else:
             for b in self.strbases:
                 if b == "A":
@@ -62,7 +62,7 @@ class Seq:
                 elif b == "T":
                      count_t += 1
             list_count = [count_a, count_c, count_g, count_g, count_t]
-            new_dict = dict(zip(list_bases, list_count))
-        return new_dict
+            new_list = list(zip(list_bases, list_count))
+        return new_list
 
 

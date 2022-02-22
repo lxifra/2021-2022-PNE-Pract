@@ -32,8 +32,37 @@ class Seq:
                 valid = False
             i += 1
         return valid
-        #we are going to use a dynamic method
 
     def len(self):
         """Calculate the length of the sequence"""
-        return len(self.strbases)
+        new_len = ""
+        if self.strbases == "NULL" or self.strbases == "ERROR":
+            new_len = 0
+        else:
+            new_len = len(self.strbases)
+        return new_len
+
+    def count_base(self):
+        list_bases = ["A", "C", "G", "T"]
+        count_a = 0
+        count_c = 0
+        count_g = 0
+        count_t = 0
+        if self.strbases == "NULL" or self.strbases == "ERROR":
+            list_count = [count_a, count_c, count_g, count_t]
+            new_dict = dict(zip(list_bases, list_count))
+        else:
+            for b in self.strbases:
+                if b == "A":
+                    count_a += 1
+                elif b == "C":
+                    count_c += 1
+                elif b == "G":
+                     count_g += 1
+                elif b == "T":
+                     count_t += 1
+            list_count = [count_a, count_c, count_g, count_g, count_t]
+            new_dict = dict(zip(list_bases, list_count))
+        return new_dict
+
+

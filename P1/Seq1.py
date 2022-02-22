@@ -1,15 +1,20 @@
 class Seq:
     """A class for representing sequences"""
 
-    def __init__(self, strbases): #para crear un object
+    def __init__(self, strbases = "NULL"): #para crear un object #creo que null es para que sea
+        #opcional pasar un argumento
 
         # Initialize the sequence with the value
         # passed as argument when creating the object
         self.strbases = strbases #aquí es donde se crea
-        if not self.valid_sequence():
+        if strbases == "NULL":
+            print("NULL sequence created")
+            self.strbases = "NULL"
+        elif not self.valid_sequence():
             self.strbases = "ERROR"
             print("ERROR!")
         else:
+            self.strbases = strbases
             print("New sequence created!")
 
     def __str__(self): #para imprimir las sequencias

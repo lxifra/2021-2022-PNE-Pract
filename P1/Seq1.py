@@ -103,7 +103,6 @@ class Seq:
         return complement_seq
 
     def read_fasta(self):
-        import P0
         exit = False
         while not exit:
             FILENAME = "U5.txt"
@@ -115,5 +114,11 @@ class Seq:
                 return full_seq
             except FileNotFoundError:
                 print("File does not exist. Choose another file.")
+
+
+    def seq_read_fasta(self, filename):
+        f = open("./sequences" + filename + ".txt", "r").read()
+        self.strbases = f[f.find("\n"):].replace("\n", "")
+
 
 

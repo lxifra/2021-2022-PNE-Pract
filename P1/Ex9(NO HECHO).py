@@ -1,6 +1,6 @@
-from Seq1 import Seq
+import Seq1
 
-s = Seq()
-
-hola = s.read_fasta()
-print(hola)
+s = Seq1.Seq()
+s.seq_read_fasta("FRAT1")
+print(s)
+print(s.len())

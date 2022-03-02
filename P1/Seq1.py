@@ -102,23 +102,28 @@ class Seq:
                 complement_seq += d[b]
         return complement_seq
 
-    def read_fasta(self):
-        exit = False
-        while not exit:
-            FILENAME = "U5.txt"
-            try:
-                FOLDER = "./sequences/"
-                full_seq = open(FOLDER + FILENAME, "r").read()
-                full_seq = full_seq[full_seq.find("\n"):].replace("\n", "")
-                exit = True
-                return full_seq
-            except FileNotFoundError:
-                print("File does not exist. Choose another file.")
+    #def read_fasta(self):
+        #exit = False
+        #while not exit:
+            #FILENAME = "U5.txt"
+            #try:
+                #FOLDER = "./sequences/"
+                #full_seq = open(FOLDER + FILENAME, "r").read()
+                #full_seq = full_seq[full_seq.find("\n"):].replace("\n", "")
+                #exit = True
+                #return full_seq
+            #except FileNotFoundError:
+                #print("File does not exist. Choose another file.")
 
 
     def seq_read_fasta(self, filename):
-        f = open("./sequences" + filename + ".txt", "r").read()
-        self.strbases = f[f.find("\n"):].replace("\n", "")
+        from pathlib import Path
+        file_contents = Path(filename).read_text()
+        lines = file_contents.splitlines()
+        body = lines[1:]
+        self.strbases = ""
+        for lines in body:
+            self.strbases += lines
 
 
 

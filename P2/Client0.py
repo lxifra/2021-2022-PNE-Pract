@@ -1,22 +1,19 @@
 class Client:
-    def __init__(self, strbases = "NULL"):
-        self.strbases = strbases
-        if strbases == "NULL":
-            print("NULL sequence created!")
-            self.strbases = "NULL"
-        elif not self.valid_sequence():
-            self.strbases = "ERROR"
-            print("Invalid sequence created!")
-        else:
-            self.strbases = strbases
-            print("New sequence created!")
+    def __init__(self, ip, port):
+        self.ip = ip
+        self.port = port
 
-    def valid_sequence(self):
-        valid = True
-        i = 0
-        while i < len(self.strbases) and valid:
-            c = self.strbases[i]
-            if c != "A" and c != "C" and c != "G" and c != "T":
-                valid = False
-            i += 1
-        return valid
+    def ping(self):
+        print("OK!")
+
+    def __str__(self):
+        phrase = "Connection to SERVER at " + str(self.ip) + " PORT: " + str(self.port)
+        return phrase
+
+    def talk(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((self.ip, self.port))
+        s.send(str.encode(msg))
+        response = s.recv(2048).decode("utf-8")
+        s.close()
+        return response

@@ -11,6 +11,8 @@ class Client:
         return phrase
 
     def talk(self):
+        FOLDER = "../Session-08/server.py"
+        s = open(FOLDER).read()
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((self.ip, self.port))
         s.send(str.encode(msg))

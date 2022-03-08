@@ -1,15 +1,18 @@
 import socket
 
 # Configure the Server's IP and PORT
-PORT = 21000
-IP = "212.128.253.64"
+PORT = 8080
+IP = "localhost"
 MAX_OPEN_REQUESTS = 5
 
 # Counting the number of connections
 number_con = 0
 
 # create an INET, STREAMing socket
-serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #para crear un socket, poner siempre.
+#AF_INET: el que se comunica con el IP
+#SOCK_STREAM: los mensajes que se envian y se reciben
+
 try:
     serversocket.bind((IP, PORT))
     # become a server socket
@@ -19,7 +22,8 @@ try:
     while True:
         # accept connections from outside
         print("Waiting for connections at {}, {} ".format(IP, PORT))
-        (clientsocket, address) = serversocket.accept()
+        (clientsocket, address) = serversocket.accept() #para que el receptor acepte el mensaje del que
+        #lo recibe
 
         # Another connection!e
         number_con += 1

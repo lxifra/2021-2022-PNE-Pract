@@ -6,43 +6,37 @@ import pathlib
 IP = "127.0.0.1"
 PORT = 8080
 
-#We will crrate a string with the full response of the http.
 
 def process_client(s):
-    # -- Receive the request message
     req_raw = s.recv(2000)
     req = req_raw.decode()
 
     print("Message FROM CLIENT: ")
 
-    # -- Split the request messages into lines
     lines = req.split('\n')
 
-    # -- The request line is the first
     req_line = lines[0]
 
     print("Request line: ", end="")
     termcolor.cprint(req_line, "green")
-
-    # -- Generate the response message
-    # It has the following lines
-    # Status line
-    # header
-    # blank line
-    # Body (content to send)
-
-    # -- Let's start with the body
-    body = pathlib.Path("html/index.html").read_text()
-    #body = "Hello from my first web server!\n"
-
+    route = req_line.split(" ")[1]
     if route == "/":
         body = pathlib.Path("html/index.html").read_text()
+    elif route == "/goodbye":
+        body = pathlib.Path("html/goodbye.html").read_text()
+    elif route == "/favicon.ico":
+        body = pathlib.Path("html/index.html").read_text()
+    else:
+        filename = route[:1]
+        body = pathlib.Path("html/" + filename + ".html").read_text()
+
+    # This new contents are written in HTML language
 
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"
 
     # -- Add the Content-Type header
-    header = "Content-Type: text/plain\n"
+    header = "Content-Type: text/html\n"
 
     # -- Add the Content-Length
     header += f"Content-Length: {len(body)}\n"

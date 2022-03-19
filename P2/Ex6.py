@@ -10,23 +10,16 @@ seq = open("./sequences/" + "FRAT1.txt", "r").read()
 seq = seq[seq.find("\n"):].replace("\n", "")
 print("Gene FRAT:", seq)
 
-list_frag = []
-count = 0
-exit = False
+msg = c.talk("Sending FRAT1 Gene to the server, in fragment of 10 bases... ")
+
 frag = ""
+seqnum = 0
 
-for b in seq:
+for b in seq :
     frag += b
-    if len(frag) == 10:
-        print(frag)
-    seq = seq[len(frag):]
-    frag = ""
-
-
-
-
-
-
-#print("Sending a message to the server...")
-#response = c.talk("Testing!")
-#print(f"Response: {response}")
+    if len(frag) == 10 and seqnum <= 4:
+        seqnum += 1
+        print("Fragment ", seqnum, ": ", frag)
+        send = c.talk("Fragment " + str(seqnum) + ": " + frag)
+        seq = seq[len(frag):]
+        frag = ""

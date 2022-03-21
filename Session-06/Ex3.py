@@ -1,5 +1,3 @@
-import termcolor
-
 class Seq:
     """A class for representing sequences"""
 
@@ -25,15 +23,14 @@ def print_seqs(seq_list):
     for seq in seq_list:
         lenght = len(seq)
         n_list += 1
-        if seq_list == seq_list1:
-            termcolor.cprint("Sequence" + str(n_list) + ": (Lenght: " + str(lenght) + ")" + seq.__str__(), "blue")
+        print("Sequence", n_list, ": (Lenght: ", lenght, ")", seq.__str__())
 
 seq_list1 = generate_seqs("A", 3)
 seq_list2 = generate_seqs("AC", 5)
 
-termcolor.cprint("List 1:", "blue")
-termcolor.cprint(print_seqs(seq_list2), "blue")
+print("List 1:")
+print_seqs(seq_list1)
 
 print()
-termcolor.cprint("List 2:", "yellow")
-termcolor.cprint(print_seqs(seq_list2), "yellow")
+print("List 2:")
+print_seqs(seq_list2)

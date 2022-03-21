@@ -1,12 +1,8 @@
 class Seq:
     """A class for representing sequences"""
 
-    def __init__(self, strbases = "NULL"): #para crear un object #creo que null es para que sea
-        #opcional pasar un argumento
-
-        # Initialize the sequence with the value
-        # passed as argument when creating the object
-        self.strbases = strbases #aquí es donde se crea
+    def __init__(self, strbases = "NULL"):
+        self.strbases = strbases
         if strbases == "NULL":
             print("NULL sequence created!")
             self.strbases = "NULL"
@@ -17,12 +13,11 @@ class Seq:
             self.strbases = strbases
             print("New sequence created!")
 
-    def __str__(self): #para imprimir las sequencias
+    def __str__(self):
         """Method called when the object is being printed"""
-
-        # -- We just return the string with the sequence
         return self.strbases
 
+#EXCERCISE 1:
     def valid_sequence(self):
         valid = True
         i = 0
@@ -32,6 +27,9 @@ class Seq:
                 valid = False
             i += 1
         return valid
+
+#EXCERCISE 2:
+
 
     def len(self):
         """Calculate the length of the sequence"""

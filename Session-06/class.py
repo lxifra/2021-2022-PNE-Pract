@@ -1,10 +1,16 @@
 class Seq:
     """A class for representing sequences"""
 
+    #Hasta aquí y con un pass sería una clase vacía
+
     def __init__(self, strbases):
-        # Initialize the sequence with the value
-        # passed as argument when creating the object
+
+        # Esta es la función que se llama cada vez que creamos un objeto (cuando solo tiene self)
+
         self.strbases = strbases
+
+        # Cuando se le añade strbases, es para convertir  una string en un objeto para la clase
+        # sigue siendo una string
 
         print("New sequence created!")
 
@@ -14,16 +20,9 @@ class Seq:
         # -- We just return the string with the sequence
         return self.strbases
 
-
-# --- Main program
-s1 = Seq("AGTACACTGGT")
-s2 = Seq("CGTAAC")
-
-# -- Printing the objects
-print(f"Sequence 1: {s1}")
-print(f"Sequence 2: {s2}")
-print("Testing....")
-
+    def len(self):
+        """Calculate the length of the sequence"""
+        return len(self.strbases)
 
 class Gene(Seq):
     """This class is derived from the Seq Class
@@ -37,3 +36,19 @@ class Gene(Seq):
         super().__init__(strbases)
         self.name = name
         print("New gene created")
+
+    def __str__(self):
+        """Print the Gene name along with the sequence"""
+        return self.name + "-" + self.strbases
+
+    #La rueda hacia arriba significa que la función de str ya se ha llamado antes.
+
+
+# --- Main program
+# --- Main program
+s1 = Seq("AGTACACTGGT")
+g = Gene("CGTAAC", "FRAT1")
+
+# -- Printing the objects
+print(f"Sequence 1: {s1}")
+print(f"Gene: {g}")

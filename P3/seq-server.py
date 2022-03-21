@@ -1,5 +1,5 @@
 import socket
-import termcolor
+#import termcolor
 
 PORT = 8080
 IP = "127.0.0.1"
@@ -19,11 +19,27 @@ try:
         number_con += 1
         print("CONNECTION: {}. From the IP: {}".format(number_con, address))
         msg = clientsocket.recv(2048).decode("utf-8")
-        termcolor.cprint("Message from client: {}".format(msg), "yellow")
-        message = "Hello from the teacher's server"
-        send_bytes = str.encode(message)
-        clientsocket.send(send_bytes)
+        #termcolor.cprint("Message from client: {}".format(msg), "yellow")
+
+        split_list = msg.split(" ")
+        cmd = split_list[0]
+
+        if cmd != "PING":
+            arg = split_list[1]
+
+        if cmd == "PING":
+            response = "PING OK!"
+        elif cmd == "REV":
+            response = arg[::-1]
+
+        #message = "Hello from the teacher's server"
+        #send_bytes = str.encode(message)
+        clientsocket.send(response.encode())
         clientsocket.close()
+
+
+
+
 
 except socket.error:
     print("Problems using port {}. Do you have permission?".format(PORT))

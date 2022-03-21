@@ -27,13 +27,16 @@ def print_seqs(seq_list):
         n_list += 1
         if seq_list == seq_list1:
             termcolor.cprint("Sequence" + str(n_list) + ": (Lenght: " + str(lenght) + ")" + seq.__str__(), "blue")
+        elif seq_list == seq_list2:
+            termcolor.cprint("Sequence" + str(n_list) + ": (Lenght: " + str(lenght) + ")" + seq.__str__(), "yellow")
+
 
 seq_list1 = generate_seqs("A", 3)
 seq_list2 = generate_seqs("AC", 5)
 
 termcolor.cprint("List 1:", "blue")
-termcolor.cprint(print_seqs(seq_list2), "blue")
+print_seqs(seq_list1)
 
 print()
 termcolor.cprint("List 2:", "yellow")
-termcolor.cprint(print_seqs(seq_list2), "yellow")
+print_seqs(seq_list2)

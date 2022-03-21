@@ -1,49 +1,65 @@
 import socket
-#import termcolor
+import termcolor
+
+ls = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+ls.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 PORT = 8080
-IP = "127.0.0.1"
-MAX_OPEN_REQUESTS = 5
+IP = "localhost"
 
-number_con = 0
+ls.bind((IP, PORT))
+ls.listen()
+print("The server is configured!")
 
-serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-try:
-    serversocket.bind((IP, PORT))
-    serversocket.listen(MAX_OPEN_REQUESTS)
-
-    while True:
-        print("Waiting for connections at {}, {} ".format(IP, PORT))
-        (clientsocket, address) = serversocket.accept()
-        number_con += 1
-        print("CONNECTION: {}. From the IP: {}".format(number_con, address))
-        msg = clientsocket.recv(2048).decode("utf-8")
-        #termcolor.cprint("Message from client: {}".format(msg), "yellow")
+while True:
+    print("Waiting for Clients to connect")
+    try:
+        (cs, client_ip_port) = ls.accept()
+    except KeyboardInterrupt:
+        print("Server stopped by the user")
+        ls.close()
+        exit()
+    else:
+        print("A client has connected to the server!")
+        msg_raw = cs.recv(2048)
+        msg = msg_raw.decode()
+        print(f"Message received: {msg}")
 
         split_list = msg.split(" ")
         cmd = split_list[0]
 
+        #EXCERCISE 1:
         if cmd != "PING":
             arg = split_list[1]
-
         if cmd == "PING":
             response = "PING OK!"
-        elif cmd == "REV":
-            response = arg[::-1]
-
-        #message = "Hello from the teacher's server"
-        #send_bytes = str.encode(message)
-        clientsocket.send(response.encode())
-        clientsocket.close()
+            termcolor.cprint("PING COMMAND!", "yellow")
+            print("OK!")
 
 
+        #EXCERCISE 2:
+        elif cmd == "GET":
+            SEQUENCES = ["ADA.txt", "FRAT1.txt", "FXN.txt", "RNU6_2629.txt", "U5.txt"]
+            FOLDER = "./sequences/"
+            try:
+                index = int(arg)
+                response = SEQUENCES[index]
+                sequence = open(FOLDER + response, "r").read()
+                full_seq = sequence[sequence.find("\n"):].replace("\n", "")
+                termcolor.cprint("GET", "yellow")
+                print(full_seq)
+            except ValueError:
+                response = "The argument for the GET command must be a number from 0 to 4"
+            except IndexError:
+                response = "The argument for the GET command must be a number from 0 to 4"
+
+        elif cmd == "INFO":
+            pass
 
 
 
-except socket.error:
-    print("Problems using port {}. Do you have permission?".format(PORT))
+        #EXCERCISE 3:
 
-except KeyboardInterrupt:
-    print("Server stopped by the user")
-    serversocket.close()
+
+        cs.send(response.encode())
+        cs.close()

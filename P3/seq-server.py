@@ -1,5 +1,16 @@
 import socket
 import termcolor
+from ClassSeq import Seq
+
+def info_operation(arg):
+    print("Sequence: ", arg)
+    print("Total lenght: ", len(arg))
+    d = {"A": 0, "C": 0, "G": 0, "T": 0}
+    for b in arg:
+        d[b] += 1
+        print(b,  ":", d[b], "(" , (d[b] * 100) / len(arg),  ")")
+
+
 
 ls = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 ls.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -53,12 +64,27 @@ while True:
             except IndexError:
                 response = "The argument for the GET command must be a number from 0 to 4"
 
-        elif cmd == "INFO":
-            pass
-
-
-
         #EXCERCISE 3:
+        #!!!!
+        elif cmd == "INFO":
+            termcolor.cprint("INFO", "yellow")
+            response = info_operation(arg)
+
+        #EXCERCISE 4:
+        elif cmd == "COMP":
+            termcolor.cprint("COMP", "yellow")
+            sequence = Seq(arg)
+            print("Seq: ", sequence)
+            response = sequence.complement()
+            print("Comp: ", response)
+
+        #EXCERCISE 5:
+        elif cmd == "REV":
+            termcolor.cprint("REV", "yellow")
+            response = arg[::-1]
+            print(response)
+
+
 
 
         cs.send(response.encode())

@@ -1,5 +1,5 @@
 import socket
-from Seq1 import Client
+from Classclient import Client
 
 PORT = 8080
 IP = "localhost"
@@ -16,7 +16,18 @@ print(msg.decode("utf-8"))
 
 #EXCERCISE 2:
 c = Client(IP, PORT)
-msg = c.talk("GET 2")
-#print("GET 0:") #msg.decode("utf-8"))
+#msg = c.talk("GET 2")
 
+
+#EXCERCISE 3:
+#print("* TESTING INFO...")
+#msg = c.talk("INFO AACCGTAA")
+
+#EXCERCISE 4:
+#msg = c.talk("COMP ACGTA")
+
+#EXCERCISE 5:
+msg = c.talk("REV ACCTGT")
 s.close()
+
+

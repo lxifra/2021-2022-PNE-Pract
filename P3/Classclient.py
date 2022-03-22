@@ -18,3 +18,12 @@ class Client:
         response = s.recv(2048).decode("utf-8")
         s.close()
         return response
+
+    def info_operation(self, arg):
+        print("Sequence: ", arg)
+        print("Total lenght: ", len(arg))
+        d = {"A": 0, "C": 0, "G": 0, "T": 0}
+        for b in arg:
+            d[b] += 1
+            print(b, ":", d[b], "(", (d[b] * 100) / len(arg), ")")
+

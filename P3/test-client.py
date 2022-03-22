@@ -30,6 +30,7 @@ for n in list:
 #EXCERCISE 3:
 #print("* TESTING INFO...")
 #msg = c.talk("INFO AACCGTAA")
+#print(msg)
 
 #EXCERCISE 4:
 print(" * TESTING COMP...")

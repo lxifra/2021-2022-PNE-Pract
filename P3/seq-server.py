@@ -43,22 +43,25 @@ while True:
         if cmd != "PING":
             arg = split_list[1]
         if cmd == "PING":
-            response = "PING OK!"
+            response = "OK!"
             termcolor.cprint("PING COMMAND!", "yellow")
             print("OK!")
 
 
         #EXCERCISE 2:
         elif cmd == "GET":
-            SEQUENCES = ["ADA.txt", "FRAT1.txt", "FXN.txt", "RNU6_2629.txt", "U5.txt"]
+            SEQUENCES = ["ADA.txt", "FRAT1.txt", "FXN.txt", "RNU6_269P.txt", "U5.txt"]
             FOLDER = "./sequences/"
             try:
                 index = int(arg)
-                response = SEQUENCES[index]
-                sequence = open(FOLDER + response, "r").read()
+                filename = SEQUENCES[index]
+                sequence = open(FOLDER + filename, "r").read()
                 full_seq = sequence[sequence.find("\n"):].replace("\n", "")
                 termcolor.cprint("GET", "yellow")
                 print(full_seq)
+                response = "GET " + str(index) + ":" + full_seq
+                cs.send(response.encode())
+
             except ValueError:
                 response = "The argument for the GET command must be a number from 0 to 4"
             except IndexError:
@@ -75,17 +78,22 @@ while True:
             termcolor.cprint("COMP", "yellow")
             sequence = Seq(arg)
             print("Seq: ", sequence)
-            response = sequence.complement()
+            response = "COMP " + str(sequence.complement())
             print("Comp: ", response)
 
         #EXCERCISE 5:
         elif cmd == "REV":
             termcolor.cprint("REV", "yellow")
-            response = arg[::-1]
-            print(response)
+            reverse = arg[::-1]
+            print(reverse)
+            response = "REV " + str(reverse)
 
-
-
+        elif cmd == "GENE":
+            termcolor.cprint("GENE", "yellow")
+            filename = Seq(arg)
+            gene = filename.read_fasta(filename)
+            print(gene)
+            response = "GENE " + str(filename) + ":" + gene
 
         cs.send(response.encode())
         cs.close()

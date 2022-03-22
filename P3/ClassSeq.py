@@ -10,9 +10,9 @@ class Seq:
         if strbases == "NULL":
             print("NULL sequence created!")
             self.strbases = "NULL"
-        elif not self.valid_sequence():
-            self.strbases = "ERROR"
-            print("Invalid sequence created!")
+        #elif not self.valid_sequence():
+            #self.strbases = "ERROR"
+            #print("Invalid sequence created!")
         else:
             self.strbases = strbases
             print("New sequence created!")
@@ -102,28 +102,25 @@ class Seq:
                 complement_seq += d[b]
         return complement_seq
 
-    #def read_fasta(self):
-        #exit = False
-        #while not exit:
-            #FILENAME = "U5.txt"
-            #try:
-                #FOLDER = "./sequences/"
-                #full_seq = open(FOLDER + FILENAME, "r").read()
-                #full_seq = full_seq[full_seq.find("\n"):].replace("\n", "")
-                #exit = True
-                #return full_seq
-            #except FileNotFoundError:
-                #print("File does not exist. Choose another file.")
+    def read_fasta(self, filename):
+        try:
+            FOLDER = "./sequences/"
+            full_seq = open(FOLDER + str(filename) + ".txt" , "r").read()
+            full_seq = full_seq[full_seq.find("\n"):].replace("\n", "")
+            return full_seq
+
+        except FileNotFoundError:
+            print("File does not exist. Choose another file.")
 
 
-    def seq_read_fasta(self, filename):
-        from pathlib import Path
-        file_contents = Path(filename).read_text()
-        lines = file_contents.splitlines()
-        body = lines[1:]
-        self.strbases = ""
-        for lines in body:
-            self.strbases += lines
+    #def seq_read_fasta(self, filename):
+        #from pathlib import Path
+        #file_contents = Path(filename).read_text()
+        #lines = file_contents.splitlines()
+        #body = lines[1:]
+        #self.strbases = ""
+        #for lines in body:
+            #self.strbases += lines
 
 
 

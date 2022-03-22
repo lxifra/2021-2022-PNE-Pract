@@ -9,6 +9,7 @@ def info_operation(arg):
     for b in arg:
         d[b] += 1
         print(b,  ":", d[b], "(" , (d[b] * 100) / len(arg),  ")")
+        print("hola")
 
 
 

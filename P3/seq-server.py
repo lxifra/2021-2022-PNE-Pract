@@ -2,13 +2,22 @@ import socket
 import termcolor
 from ClassSeq import Seq
 
-def info_operation(arg):
+def count_bases(arg):
     print("Sequence: ", arg)
     print("Total lenght: ", len(arg))
     d = {"A": 0, "C": 0, "G": 0, "T": 0}
     for b in arg:
         d[b] += 1
-        print(b,  ":", d[b], "(" , (d[b] * 100) / len(arg),  ")")
+    total = sum(d.values())
+    for k, v in d.items():
+        d[k] = [v, (v * 100)/ total]
+    final_dict = d
+    message = ""
+    for k, v in final_dict.items():
+        message += k + ": " + str(v[0]) + " (" + str(round(v[1], 2)) + "%)" + "\n"
+    return message
+
+    #print(b,  ":", d[b], "(" , (d[b] * 100) / len(arg),  ")")
 
 
 
@@ -68,10 +77,10 @@ while True:
                 response = "The argument for the GET command must be a number from 0 to 4"
 
         #EXCERCISE 3:
-        #!!!!
         elif cmd == "INFO":
             termcolor.cprint("INFO", "yellow")
-            response = info_operation(arg)
+            response = count_bases(arg)
+            print(response)
 
         #EXCERCISE 4:
         elif cmd == "COMP":
@@ -88,6 +97,7 @@ while True:
             print(reverse)
             response = "REV " + str(reverse)
 
+        #EXCERCISE 6:
         elif cmd == "GENE":
             termcolor.cprint("GENE", "yellow")
             filename = Seq(arg)

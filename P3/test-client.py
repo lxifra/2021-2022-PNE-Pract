@@ -27,19 +27,22 @@ for n in list:
     msg = c.talk("GET " + n)
     print(msg)
 
+seq = c.talk("GET 0")
+seq = seq.split("GET 0:")[1]
+
 #EXCERCISE 3:
-#print("* TESTING INFO...")
-#msg = c.talk("INFO AACCGTAA")
-#print(msg)
+print("* TESTING INFO...")
+msg = c.talk("INFO " + seq)
+print(msg)
 
 #EXCERCISE 4:
 print(" * TESTING COMP...")
-msg = c.talk("COMP ACGTA")
+msg = c.talk("COMP " + seq)
 print(msg)
 
 #EXCERCISE 5:
 print(" * TESTING REV...")
-msg = c.talk("REV ACCTGT")
+msg = c.talk("REV " + seq)
 print(msg)
 
 #EXCERCISE 6:
@@ -48,7 +51,6 @@ genes = ["ADA", "FRAT1", "FXN", "RNU6_269P", "U5"]
 for g in genes:
     msg = c.talk("GENE " + g)
     print(msg)
-
 
 
 s.close()

@@ -43,46 +43,19 @@ class Seq:
         return new_len
 
     def count_base(self):
-        count_a = 0
-        count_c = 0
-        count_g = 0
-        count_t = 0
-        if self.strbases == "NULL" or self.strbases == "ERROR":
-            pass
-        else:
-            for b in self.strbases:
-                if b == "A":
-                    count_a += 1
-                elif b == "C":
-                    count_c += 1
-                elif b == "G":
-                     count_g += 1
-                elif b == "T":
-                     count_t += 1
-        return count_a, count_c, count_g, count_t
-
-    def count(self):
-        list_bases = ["A", "C", "G", "T"]
-        count_a = 0
-        count_c = 0
-        count_g = 0
-        count_t = 0
-        if self.strbases == "NULL" or self.strbases == "ERROR":
-            list_count = [count_a, count_c, count_g, count_g, count_t]
-            new_dict = dict(zip(list_bases, list_count))
-        else:
-            for b in self.strbases:
-               if b == "A":
-                   count_a += 1
-               elif b == "C":
-                    count_c += 1
-               elif b == "G":
-                     count_g += 1
-               elif b == "T":
-                     count_t += 1
-        list_count = [count_a, count_c, count_g, count_g, count_t]
-        new_dict = dict(zip(list_bases, list_count))
-        return new_dict
+        print("Sequence: ", self.strbases)
+        print("Total lenght: ", len(self.strbases))
+        d = {"A": 0, "C": 0, "G": 0, "T": 0}
+        for b in self.strbases:
+            d[b] += 1
+        total = sum(d.values())
+        for k, v in d.items():
+            d[k] = [v, (v * 100) / total]
+        final_dict = d
+        message = ""
+        for k, v in final_dict.items():
+            message += k + ": " + str(v[0]) + " (" + str(round(v[1], 2)) + "%)" + "\n"
+        return message
 
     def reverse(self):
         reverse_seq = ""

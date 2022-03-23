@@ -2,24 +2,6 @@ import socket
 import termcolor
 from ClassSeq import Seq
 
-def count_bases(arg):
-    print("Sequence: ", arg)
-    print("Total lenght: ", len(arg))
-    d = {"A": 0, "C": 0, "G": 0, "T": 0}
-    for b in arg:
-        d[b] += 1
-    total = sum(d.values())
-    for k, v in d.items():
-        d[k] = [v, (v * 100)/ total]
-    final_dict = d
-    message = ""
-    for k, v in final_dict.items():
-        message += k + ": " + str(v[0]) + " (" + str(round(v[1], 2)) + "%)" + "\n"
-    return message
-
-    #print(b,  ":", d[b], "(" , (d[b] * 100) / len(arg),  ")")
-
-
 
 ls = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 ls.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -79,7 +61,8 @@ while True:
         #EXCERCISE 3:
         elif cmd == "INFO":
             termcolor.cprint("INFO", "yellow")
-            response = count_bases(arg)
+            arg = Seq(arg)
+            response = Seq.count_base(arg)
             print(response)
 
         #EXCERCISE 4:

@@ -1,3 +1,5 @@
+#create the complement of the sequence
+
 import Seq0
 
 FOLDER = "./sequences/"

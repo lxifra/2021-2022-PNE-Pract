@@ -1,6 +1,8 @@
+#count the bases of each gene.
+
 import Seq0
 
-list_genes = ["U5.txt", "ADA.txt", "FRAT1.txt", "FXN.txt"]
+list_genes = ["U5.txt", "ADA.txt", "FRAT1.txt", "RNU6_269P.txt", "FXN.txt"]
 FOLDER = "./sequences/"
 for l in list_genes:
     seq = open(FOLDER + l, "r").read()

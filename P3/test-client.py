@@ -52,7 +52,10 @@ for g in genes:
     msg = c.talk("GENE " + g)
     print(msg)
 
-
+#EXCERCISE EXAM:
+print(" * EXCERCISE PRACTICAL EXAM.")
+sequence = input("Introduce a sequence: ")
+msg = c.talk("OPE " + sequence)
 s.close()
 
 

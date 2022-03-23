@@ -88,5 +88,27 @@ while True:
             print(gene)
             response = "GENE " + str(filename) + ":" + gene
 
+        elif cmd == "OPE":
+            valid = True
+            i = 0
+            while i < len(arg) and valid:
+                c = arg[i]
+                if c != "A" and c != "C" and c != "G" and c != "T":
+                    valid = False
+                    print("We could not multiply the bases since the sequence is not correct.")
+                else:
+                    d = {"A": 4, "C": -3, "G": 7, "T": -6}
+                    keys = d.keys()
+                    n_appear = 0
+                    total_sum = 0
+                    i = 0
+                    for k in keys:
+                        if k == arg[i]:
+                            total_sum = sum(d.values())
+                        i += 1
+                    print("TOTAL SUM: ", total_sum)
+                    response = str(total_sum)
+
+
         cs.send(response.encode())
         cs.close()

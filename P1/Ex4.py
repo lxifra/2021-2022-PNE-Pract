@@ -1,3 +1,5 @@
+#lenght of invalid and null sequences
+
 from Seq1 import Seq
 
 s1 = Seq()

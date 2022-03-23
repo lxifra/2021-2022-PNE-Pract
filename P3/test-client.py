@@ -22,7 +22,7 @@ print(msg.decode("utf-8"))
 
 #EXCERCISE 2:
 print(" * TESTING GET...")
-list = ["0", "1", "2", "3"]
+list = ["0", "1", "2", "3", "4"]
 for n in list:
     msg = c.talk("GET " + n)
     print(msg)

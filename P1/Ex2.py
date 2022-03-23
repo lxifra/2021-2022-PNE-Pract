@@ -1,3 +1,5 @@
+#To create null sequences
+
 from Seq1 import Seq
 null_seq = Seq()
 valid_seq = Seq("ACGTA")

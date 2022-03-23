@@ -1,3 +1,5 @@
+#To create invalid sequences
+
 from Seq1 import Seq
 
 s1 = Seq()

@@ -1,0 +1,17 @@
+With file "http://127.0.0.1:8080/hello":
+- Which is the request line?
+GET /hello HTTP/1.1
+- Which is the resource name that the client is asking for? (Path)
+/hello
+
+With file "http://127.0.0.1:8080/file.html":
+- Which is the request line?
+GET /file.html HTTP/1.1
+- Which is the resource name that the client is asking for? (Path)
+/file.html
+
+With file "":
+- Which is the request line?
+GET /hi/there?name=virus&type=corona HTTP/1.1
+- Which is the resource name that the client is asking for? (Path)
+/hi/there?name=virus&type=corona

@@ -1,43 +1,34 @@
 import socket
 import termcolor
+import pathlib
 
-
-# -- Server network parameters
 IP = "127.0.0.1"
 PORT = 8080
 
 
 def process_client(s):
-    # -- Receive the request message
     req_raw = s.recv(2000)
     req = req_raw.decode()
 
     print("Message FROM CLIENT: ")
-
-    # -- Split the request messages into lines
     lines = req.split('\n')
-
-    # -- The request line is the first
     req_line = lines[0]
+    termcolor.cprint(req_line, "green")
+    route = req_line.split(" ")[1]
 
     print("Request line: ", end="")
-    termcolor.cprint(req_line, "green")
 
-    # -- Generate the response message
-    # It has the following lines
-    # Status line
-    # header
-    # blank line
-    # Body (content to send)
+    print("ROUTE", route)
 
-    # -- Let's start with the body
-    body = "Hello from my first web server!\n"
+    if route == "/":
+        body = pathlib.Path("index.html").read_text()
+    elif route == "/info/A":
+        body = pathlib.Path("A.html").read_text()
 
-    # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"
 
     # -- Add the Content-Type header
-    header = "Content-Type: text/plain\n"
+    header = "Content-Type: text/html\n"
 
     # -- Add the Content-Length
     header += f"Content-Length: {len(body)}\n"

@@ -1,6 +1,9 @@
+#Para que en vez de enviar strings enviamos un http.
+#sale con el fondo verde
+
 import socket
 import termcolor
-import pathlib
+
 
 # -- Server network parameters
 IP = "127.0.0.1"
@@ -8,30 +11,42 @@ PORT = 8080
 
 
 def process_client(s):
+    # -- Receive the request message
     req_raw = s.recv(2000)
     req = req_raw.decode()
 
     print("Message FROM CLIENT: ")
 
+    # -- Split the request messages into lines
     lines = req.split('\n')
 
+    # -- The request line is the first
     req_line = lines[0]
 
     print("Request line: ", end="")
     termcolor.cprint(req_line, "green")
-    route = req_line.split(" ")[1]
-    if route == "/":
-        body = pathlib.Path("html/index.html").read_text()
-    elif route == "/goodbye":
-        body = pathlib.Path("html/goodbye.html").read_text()
-    elif route == "/favicon.ico":
-        body = pathlib.Path("html/index.html").read_text()
-    else:
-        filename = route[:1]
-        body = pathlib.Path("html/" + filename + ".html").read_text()
+
+    # -- Generate the response message
+    # It has the following lines
+    # Status line
+    # header
+    # blank line
+    # Body (content to send)
 
     # This new contents are written in HTML language
-
+    body = """
+    <!DOCTYPE html>
+    <html lang="en" dir="ltr">
+      <head>
+        <meta charset="utf-8">
+        <title>Green server</title>
+      </head>
+      <body style="background-color: lightgreen;">
+        <h1>GREEN SERVER</h1>
+        <p>I am the Green Server! :-)</p>
+      </body>
+    </html>
+    """
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"
 
@@ -78,3 +93,4 @@ while True:
 
         # -- Close the socket
         cs.close()
+

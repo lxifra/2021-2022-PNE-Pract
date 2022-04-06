@@ -30,11 +30,13 @@ def process_client(s):
         body = pathlib.Path("C.html").read_text()
     elif route == "/info/G":
         #127.0.0.1:8080/info/G
-        body = pathlib.Path("G.html")
+        body = pathlib.Path("G.html").read_text()
     elif route == "/info/T":
-        body = pathlib.Path("T.html")
+        body = pathlib.Path("T.html").read_text()
+    elif route == "/favicon.ico":
+        body = pathlib.Path("index.html").read_text()
     else:
-        body = pathlib.Path("error.html")
+        body = pathlib.Path("error.html").read_text()
 
     status_line = "HTTP/1.1 200 OK\n"
 

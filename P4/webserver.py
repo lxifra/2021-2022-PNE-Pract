@@ -21,22 +21,22 @@ def process_client(s):
     print("ROUTE", route)
 
     if route == "/":
-        body = pathlib.Path("index.html").read_text()
+        body = pathlib.Path("info/index.html").read_text()
     elif route == "/info/A":
         #127.0.0.1:8080/info/A
-        body = pathlib.Path("A.html").read_text()
+        body = pathlib.Path("info/A.html").read_text()
     elif route == "/info/C":
         #127.0.0.1:8080/info/C
-        body = pathlib.Path("C.html").read_text()
+        body = pathlib.Path("info/C.html").read_text()
     elif route == "/info/G":
         #127.0.0.1:8080/info/G
-        body = pathlib.Path("G.html").read_text()
+        body = pathlib.Path("info/G.html").read_text()
     elif route == "/info/T":
-        body = pathlib.Path("T.html").read_text()
+        body = pathlib.Path("info/T.html").read_text()
     elif route == "/favicon.ico":
-        body = pathlib.Path("index.html").read_text()
+        body = pathlib.Path("info/index.html").read_text()
     else:
-        body = pathlib.Path("error.html").read_text()
+        body = pathlib.Path("info/error.html").read_text()
 
     status_line = "HTTP/1.1 200 OK\n"
 

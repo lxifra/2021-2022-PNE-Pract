@@ -17,22 +17,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         print(self.path)
 
         if self.path == "/":
-            contents = Path("/form-1.html").read_text()
+            contents = Path("form-ex1.html").read_text()
+
         elif self.path.startswith("/echo?msg"):
             message = self.path.split("?msg=")[1]
-            print("message is: ", message)
-            print(Path("/template.html").read_text())
-            contents = Path("/template.html").read_text().format(message)
+            contents = Path("template.html").read_text().format(message)
         else:
-            contents = Path("/Error.html").read_text()
+            contents = Path("error.html").read_text()
 
 
 
-        # Open the form1.html file
-        # Read the index from the file
-        #contents = Path('form-1.html').read_text()
-
-        # Generating the response message
         self.send_response(200)  # -- Status line: OK!
 
         # Define the content-type header:

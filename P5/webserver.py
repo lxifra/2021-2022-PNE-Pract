@@ -1,7 +1,7 @@
 import http.server
 import socketserver
 import termcolor
-from pathlib import Path
+import pathlib
 
 PORT = 8080
 
@@ -14,30 +14,39 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         in the HTTP protocol request"""
 
         termcolor.cprint(self.requestline, 'green')
-        contents = Path('form-1.html').read_text()
+        path = self.requestline.split(" ")[1]
+
+
+        if path == "/" or path == "/index.html":
+            contents = pathlib.Path("info/index.html").read_text()
+        else:
+            try:
+                FILENAME = str(path) + ".html"
+                contents = pathlib.Path(FILENAME.strip("/")).read_text()
+            except FileNotFoundError:
+                contents = pathlib.Path("info/error.html").read_text()
+
 
         self.send_response(200)
 
         self.send_header('Content-Type', 'text/html')
-        self.send_header('Content-Length', len(str.encode(contents)))
+        self.send_header('Content-Length', len(contents.encode()))
 
         self.end_headers()
 
-        self.wfile.write(str.encode(contents))
+        self.wfile.write(contents.encode())
 
         return
 
-
-# ------------------------
-# - Server MAIN program
 Handler = TestHandler
 
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
 
     print("Serving at PORT", PORT)
+
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         print("")
-        print("Stoped by the user")
+        print("Stopped by the user")
         httpd.server_close()

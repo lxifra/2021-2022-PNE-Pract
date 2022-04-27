@@ -21,7 +21,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         elif self.path.startswith("/echo?msg"):
             message = self.path.split("?msg=")[1]
-            contents = Path("template.html").read_text().format(message)
+            contents = Path("template.html").read_text().format(message.upper())
         else:
             contents = Path("error.html").read_text()
 

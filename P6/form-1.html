@@ -10,16 +10,7 @@
     <hr>
     <form action="/ping" >
         Is the server alive?: <input type="submit" value="PING">
+        <a href="index.html"></a>
     </form>
-<hr>
-<form action="/get">
-    <select name="n_sequence">
-        {% for n in range(0, context.n_sequences) %}
-        <option value={{n}}></option>
-        {endfor %}}
-    </select>
-    <input type="submit" value="GET">
-</form>
-
 </body>
 </html>

@@ -27,6 +27,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         if self.path == "/":
             contents = read_html_file("form-2.html").render(context={"n_sequences": len(LIST_SEQUENCES)})
+            #el render para jinja es como el format para lo normal
         elif self.path == "/ping?":
             contents = Path("ping.html").read_text()
 

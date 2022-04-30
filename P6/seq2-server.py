@@ -9,7 +9,7 @@ PORT = 8080
 
 socketserver.TCPServer.allow_reuse_address = True
 
-LIST_SEQUENCES = ["GGCA", "CTAC", "GAAT", "ACTT", "ACGT"]
+LIST_SEQUENCES = ["Seq0", "Seq1", "Seq2", "Seq3", "Seq4"]
 
 def read_html_file(filename):
     contents = Path(filename).read_text()
@@ -30,6 +30,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             #el render para jinja es como el format para lo normal
         elif self.path == "/ping?":
             contents = Path("ping.html").read_text()
+        elif self.path.startswith("/get?"):
+            contents = read_html_file("get.html").render(context={"n_sequences": len(LIST_SEQUENCES)})
+
 
 
         #elif self.path.startswith("/echo?msg"):

@@ -47,8 +47,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             gene = arguments["gene"][0]
             for g in LIST_GENES:
                 if gene == g:
-                    sequence = open(FOLDER + gene, "r").read()
-                    contents = read_html_file("gene.html").render(context={"gene": sequence})
+                    sequence = open(FOLDER + gene + ".txt", "r").read()
+                    sequence = sequence[sequence.find("\n"):].replace("\n", "")
+                    contents = read_html_file("gene.html").render(context={"genename": gene, "gene": sequence})
+        elif self.path.startswith("/operation?"):
+            contents = "Hola"
 
 
 

@@ -9,7 +9,12 @@ PORT = 8080
 
 socketserver.TCPServer.allow_reuse_address = True
 
-LIST_SEQUENCES = ["Seq0", "Seq1", "Seq2", "Seq3", "Seq4"]
+LIST_SEQUENCES = ["ACGTACGAT", "AACCGGTT", "TAGCATCGA", "TTAACGACA", "CGCGATACG"]
+LIST_GENES = ["ADA", "FRAT1", "FXN", "RNU6_269P", "U5"]
+FOLDER = "./genes/"
+                #index = int(arg)
+                #filename = SEQUENCES[index]
+                #sequence = open(FOLDER + filename, "r").read()
 
 def read_html_file(filename):
     contents = Path(filename).read_text()
@@ -23,15 +28,28 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         in the HTTP protocol request"""
 
         termcolor.cprint(self.requestline, 'green')
-        print(self.path)
+        #print("PATH", self.path)
+        url = urlparse(self.path)
+        #print("URL: ", url)
+        arguments = parse_qs(url.query)
+        #print("ARGUMENTS", arguments)
 
         if self.path == "/":
-            contents = read_html_file("form-2.html").render(context={"n_sequences": len(LIST_SEQUENCES)})
+            contents = read_html_file("form-2.html").render(context={"n_sequences": len(LIST_SEQUENCES), "genes": LIST_GENES})
             #el render para jinja es como el format para lo normal
         elif self.path == "/ping?":
-            contents = Path("ping.html").read_text()
+            contents = read_html_file(self.path[1:-1] + ".html").render()
         elif self.path.startswith("/get?"):
-            contents = read_html_file("get.html").render(context={"n_sequences": len(LIST_SEQUENCES)})
+            n_sequence = int(arguments["n_sequence"][0])
+            sequence = LIST_SEQUENCES[n_sequence]
+            contents = read_html_file("get.html").render(context={"n_sequence": n_sequence, "sequence": sequence})
+        elif self.path.startswith("/gene?"):
+            gene = arguments["gene"][0]
+            for g in LIST_GENES:
+                if gene == g:
+                    sequence = open(FOLDER + gene, "r").read()
+                    contents = read_html_file("gene.html").render(context={"gene": sequence})
+
 
 
 

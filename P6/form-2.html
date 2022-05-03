@@ -13,8 +13,19 @@
     </form>
 <hr>
 <form action="/get">
+    Get a sequence. Select a sequence number:
     <select name="n_sequence">
         {% for n in range(0,context.n_sequences) %}
+        <option value={{n}}>{{n}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="GET">
+</form>
+<hr>
+<form action="/gene">
+    Get a sequence. Select a sequence number:
+    <select name="gene">
+        {% for n in context.genes %}
         <option value={{n}}>{{n}}</option>
         {% endfor %}
     </select>

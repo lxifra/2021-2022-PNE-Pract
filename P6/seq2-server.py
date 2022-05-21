@@ -25,16 +25,15 @@ def info(sequence):
     sequence_name = "Sequence: " + sequence
     sequence_lenght = "Total lenght: " + str(len(sequence))
     d = {"A": 0, "C": 0, "G": 0, "T": 0}
-    for b in sequence:
-        d[b] += 1
-        total = sum(d.values())
-    #for k, v in d.items():
-        #d[k] = [v, (v * 100) / total]
-        #final_dict = d
-        #message = ""
-        #for k, v in final_dict.items():
-            #message += k + ": " + str(v[0]) + " (" + str(round(v[1], 2)) + "%)" + "\n"
-        return sequence_name, sequence_lenght
+    message = ""
+    for bases in sequence:
+        d[bases] += 1
+    total = sum(d.values())  # te da solo los valores sin las keys
+    for base, count in d.items():  # te da tanto las keys como sus valores
+        perc = str((count * 100) / total)
+        d[base] = [str(count), str(perc)]
+        message += str(base) + ": " + str(d[base][0]) + " (" + str((d[base][1])) + "%)" + "\n"
+    return sequence_name, sequence_lenght, message
 
 def complement(sequence):
     d = {"A": "T", "C": "G", "G": "C", "T": "A"}
@@ -57,7 +56,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         #print("ARGUMENTS", arguments)
 
         if self.path == "/":
-            contents = read_html_file("form-2.html").render(context={"n_sequences": len(LIST_SEQUENCES), "genes": LIST_GENES})
+            contents = read_html_file("form-2.html").render(context={"n_sequences": len(LIST_SEQUENCES),
+                                                                     "genes": LIST_GENES
+                                                                     })
             #el render para jinja es como el format para lo normal
 
         elif self.path == "/ping?":
@@ -69,7 +70,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             #ensembl_answer = make_call("/sequence/id", params)
             n_sequence = int(arguments["n_sequence"][0])
             sequence = LIST_SEQUENCES[n_sequence]
-            contents = read_html_file("get.html").render(context={"n_sequence": n_sequence, "sequence": sequence})
+            contents = read_html_file("get.html").render(context={"n_sequence": n_sequence,
+                                                                  "sequence": sequence
+                                                                  })
 
         elif self.path.startswith("/gene?"):
             gene = arguments["gene"][0]
@@ -77,25 +80,36 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 if gene == g:
                     sequence = open(FOLDER + gene + ".txt", "r").read()
                     sequence = sequence[sequence.find("\n"):].replace("\n", "")
-                    contents = read_html_file("gene.html").render(context={"genename": gene, "gene": sequence})
+                    contents = read_html_file("gene.html").render(context={"genename": gene,
+                                                                           "gene": sequence
+                                                                           })
 
         elif self.path.startswith("/operation?"):
             sequence = arguments["msg"][0]
             operation = arguments["option"][0]
 
             if operation == "Info":
-                sname, slenght = info(sequence)
-                result = sname + "\n" + slenght
-                contents = read_html_file("operation.html").render(context={"sequence": sequence, "operationtype": operation, "result": result})
+                sname, slenght, msg = info(sequence)
+                print(msg)
+                result = sname + "\n" + slenght + "\n" + msg
+                contents = read_html_file("operation.html").render(context={"sequence": sequence,
+                                                                            "operationtype": operation,
+                                                                            "result": sname
+                                                                                      + "\n" + str(msg)})
 
             elif operation == "Comp":
                 comp_seq = complement(sequence)
-                contents = read_html_file("operation.html").render(context={"sequence": sequence, "operationtype": operation, "result": comp_seq})
+                contents = read_html_file("operation.html").render(context={"sequence": sequence,
+                                                                            "operationtype": operation,
+                                                                            "result": comp_seq
+                                                                            })
 
             elif operation =="Rev":
                 rev_seq = sequence[::-1]
-                contents = read_html_file("operation.html").render(
-                context={"sequence": sequence, "operationtype": operation, "result": rev_seq})
+                contents = read_html_file("operation.html").render(context={"sequence": sequence,
+                                                                            "operationtype": operation,
+                                                                            "result": rev_seq
+                                                                            })
 
             #info
 

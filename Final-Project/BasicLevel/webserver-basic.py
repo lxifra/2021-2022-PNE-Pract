@@ -51,17 +51,35 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 for c in species:
                     list_names.append(c["display_name"])
                     wanted_names = list_names[0:int(limit)]
-                contents = read_html_file("index-basic.html").render(context={"limit": limit,
-                                                                              "total_list": list_names,
+                contents = read_html_file("listSpecies.html").render(context={"limit": limit,
+                                                                              "total_lenght": len(list_names),
                                                                               "wanted_list": wanted_names})
-
-
-
-
-
             except ConnectionRefusedError:
                 print("ERROR! Cannot connect to the Server")
                 exit()
+
+
+        elif self.path.startswith("/karyotype?"):
+            contents = "WE HAVE ENTERED THE KARYOTYPE"
+            ENDPOINT = "info/assembly/"
+            specie = arguments["specie"][0]
+
+            conn = http.client.HTTPConnection(SERVER)
+
+            try:
+                conn.request("GET", ENDPOINT + specie + PARAMS)
+                r1 = conn.getresponse()
+                print(f"Response received!: {r1.status} {r1.reason}\n")
+
+                classSpecies = r1.read().decode("utf-8")
+                classSpecies = json.loads(classSpecies)
+                karyotype = classSpecies["karyotype"]
+                contents = read_html_file("karyotype.html").render(context={"karyotype": karyotype})
+            except ConnectionRefusedError:
+                print("ERROR! Cannot connect to the Server")
+                exit()
+
+
 
 
         else:

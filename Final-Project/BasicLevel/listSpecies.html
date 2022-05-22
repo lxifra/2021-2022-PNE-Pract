@@ -5,6 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-
+The total number of species in the ensembl is: {{context.total_lenght}}
+<br>
+The limit you have selected is: {{context.limit}}
+<br>
+The names of the species are:
+{%for names in context.wanted_list%}
+<p>- {{names}}</p>
+{% endfor %}
 </body>
 </html>

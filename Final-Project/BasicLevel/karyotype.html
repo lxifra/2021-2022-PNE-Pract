@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+The names of the chromosome are:
+{% for c in context.karyotype %}
+<p>{{c}}</p>
+{% endfor %}
+</body>
+</html>

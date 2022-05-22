@@ -1,0 +1,15 @@
+{
+    "Name": [
+      {"Firstname": "Troll", "Lastname": "Face"},
+      {"Firstname": "Sax", "Lastname": "Guy"},
+      {"Firstname": "Ricky", "Lastname": "Rickroll"}
+    ],
+    "age": [20, 40, 60],
+    "phoneNumber": [
+      {"number": ["1111", "9999-564", "0"], "type": "home"},
+      {"number": ["333", "0", "0"], "type" : "office"},
+      {"number": ["0", "0", "6766534"], "type": "Dance Floor"},
+      {"number": ["0", "0", "333"], "type": "mobile"},
+      {"number": ["0", "0", "88778"], "type": "fortnite"}
+    ]
+}

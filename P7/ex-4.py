@@ -13,46 +13,20 @@ class Seq:
         return new_len
 
     def count_base(self):
-        count_a = 0
-        count_c = 0
-        count_g = 0
-        count_t = 0
-        if self.strbases == "NULL" or self.strbases == "ERROR":
-            pass
-        else:
-            for b in self.strbases:
-                if b == "A":
-                    count_a += 1
-                elif b == "C":
-                    count_c += 1
-                elif b == "G":
-                     count_g += 1
-                elif b == "T":
-                     count_t += 1
-        return count_a, count_c, count_g, count_t
+        listzip = []
+        d = {"A": 0, "C": 0, "G": 0, "T": 0}
+        for bases in self.strbases:
+            d[bases] += 1
+        total = sum(d.values())
+        for base, count in d.items():
+            perc = str((count * 100) / total)
+            termcolor.cprint(base + ": ", "blue", end="")
+            print(count, "(", round(float(perc), 1), "%)", end="\n")
+            listzip.append([count, base])
+        termcolor.cprint("Most frequent base: ", "green", end="")
+        print(max(listzip)[1])
 
-    def count(self):
-        list_bases = ["A", "C", "G", "T"]
-        count_a = 0
-        count_c = 0
-        count_g = 0
-        count_t = 0
-        if self.strbases == "NULL" or self.strbases == "ERROR":
-            list_count = [count_a, count_c, count_g, count_g, count_t]
-            new_dict = dict(zip(list_bases, list_count))
-        else:
-            for b in self.strbases:
-               if b == "A":
-                   count_a += 1
-               elif b == "C":
-                    count_c += 1
-               elif b == "G":
-                     count_g += 1
-               elif b == "T":
-                     count_t += 1
-        list_count = [count_a, count_c, count_g, count_g, count_t]
-        new_dict = dict(zip(list_bases, list_count))
-        return new_dict
+
 
 
 
@@ -100,15 +74,11 @@ try:
         termcolor.cprint("Description: ", "green", end="")
         print(info["desc"])
 
-        #genename = Seq(genename)
         seq = info["seq"]
         sequence = Seq(seq)
         termcolor.cprint("Total lenght: ", "green", end="")
-        seq = info["seq"]
-        sequence = Seq(seq)
         print(Seq.len(sequence))
-
-
+        count_base = Seq.count_base(sequence)
 
     except ConnectionRefusedError:
         print("ERROR! Cannot connect to the Server")

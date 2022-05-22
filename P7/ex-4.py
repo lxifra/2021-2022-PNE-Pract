@@ -100,10 +100,13 @@ try:
         termcolor.cprint("Description: ", "green", end="")
         print(info["desc"])
 
-        genename = Seq(genename)
+        #genename = Seq(genename)
+        seq = info["seq"]
+        sequence = Seq(seq)
         termcolor.cprint("Total lenght: ", "green", end="")
         seq = info["seq"]
-        print(Seq.len(seq))
+        sequence = Seq(seq)
+        print(Seq.len(sequence))
 
 
 

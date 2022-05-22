@@ -1,23 +1,22 @@
 import http.client
 import json
 
-genes_dict = {"SCRAP":"ENSG00000080603",
-              "FRAT1":" ENSG00000165879"} #BUSCAS "nombre gen" Ensembl stable identifier.
+#genes_dict = {"SCRAP":"ENSG00000080603",
+              #"FRAT1":" ENSG00000165879"} #BUSCAS "nombre gen" Ensembl stable identifier.
 
-#necesitas cambiar estos tres creo
+
 SERVER = 'rest.ensembl.org'
-ENDPOINT = "/info/ping" #necesitas cambiar el endpoint
+ENDPOINT = "/sequence/id/"
+ARG = "ENSG00000080603"
 PARAMS = "?content-type=application/json"
 
 print(f"\nConnecting to server: {SERVER}\n")
 
 conn = http.client.HTTPConnection(SERVER)
-# no usamos el port para que sea más seguro o algoasí, no lo necesitamos.
 
 try:
-    conn.request("GET", ENDPOINT + PARAMS)
-    # o endpoint + params o server+endpoint+params
-    # usamos solo endpoint y params porq así funciona.
+    conn.request("GET", ENDPOINT + ARG + PARAMS)
+
     r1 = conn.getresponse()
 
     print(f"Response received!: {r1.status} {r1.reason}\n")

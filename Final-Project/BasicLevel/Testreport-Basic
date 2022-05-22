@@ -1,0 +1,4 @@
+ENDPOINTS USED:
+- GET info/species : con este parametro obtenemos un enorme diccionario con distintas listas con especies y
+sus características. Para obtener el nombre de las especies solamente, utilizamos la key "display_name" y
+nos devolverá solo los nombres de las especies, los cuales meteremos en una lista.

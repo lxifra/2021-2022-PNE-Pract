@@ -1,4 +1,6 @@
 import http.server
+import http.client
+import json
 import socketserver
 import termcolor
 from pathlib import Path
@@ -19,82 +21,49 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
 
         termcolor.cprint(self.requestline, 'green')
+        print("PATH:---- >", self.path)
         url = urlparse(self.path)
+        termcolor.cprint(url, 'blue')
         arguments = parse_qs(url.query)
+        termcolor.cprint(arguments, 'yellow')
+
+        SERVER = 'rest.ensembl.org'
+        PARAMS = "?content-type=application/json"
 
         if self.path == "/":
-            contents = read_html_file("index.html").render(context={"n_sequences": len(LIST_SEQUENCES),
-                                                                     "genes": LIST_GENES
-                                                                     })
-            #el render para jinja es como el format para lo normal
+            contents = read_html_file("index-basic.html").render(context={})
 
-        elif self.path == "/ping?":
-            contents = read_html_file(self.path[1:-1] + ".html").render()
+        elif self.path.startswith("/listSpecies?"):
+            ENDPOINT = "info/species"
 
-        elif self.path.startswith("/get?"):
-            #&number=value
-            #params = "&number=" + str(sequence)
-            #ensembl_answer = make_call("/sequence/id", params)
-            n_sequence = int(arguments["n_sequence"][0])
-            sequence = LIST_SEQUENCES[n_sequence]
-            contents = read_html_file("get.html").render(context={"n_sequence": n_sequence,
-                                                                  "sequence": sequence
-                                                                  })
+            conn = http.client.HTTPConnection(SERVER)
 
-        elif self.path.startswith("/gene?"):
-            gene = arguments["gene"][0]
-            for g in LIST_GENES:
-                if gene == g:
-                    sequence = open(FOLDER + gene + ".txt", "r").read()
-                    sequence = sequence[sequence.find("\n"):].replace("\n", "")
-                    contents = read_html_file("gene.html").render(context={"genename": gene,
-                                                                           "gene": sequence
-                                                                           })
+            try:
+                conn.request("GET", ENDPOINT + PARAMS)
+                r1 = conn.getresponse()
+                print(f"Response received!: {r1.status} {r1.reason}\n")
 
-        elif self.path.startswith("/operation?"):
-            sequence = arguments["msg"][0]
-            operation = arguments["option"][0]
-
-            if operation == "Info":
-                sname, slenght, msg = info(sequence)
-                print(msg)
-                result = sname + "\n" + slenght + "\n" + msg
-                contents = read_html_file("operation.html").render(context={"sequence": sequence,
-                                                                            "operationtype": operation,
-                                                                            "result": sname
-                                                                                      + "\n" + str(msg)})
-
-            elif operation == "Comp":
-                comp_seq = complement(sequence)
-                contents = read_html_file("operation.html").render(context={"sequence": sequence,
-                                                                            "operationtype": operation,
-                                                                            "result": comp_seq
-                                                                            })
-
-            elif operation =="Rev":
-                rev_seq = sequence[::-1]
-                contents = read_html_file("operation.html").render(context={"sequence": sequence,
-                                                                            "operationtype": operation,
-                                                                            "result": rev_seq
-                                                                            })
-
-            #info
-
-
-            #comp
-
-            #return complement_seq
-
-            #reverse
-
-            #contents = read_html_file("operation.html").render(context ={""})
+                classSpecies = r1.read().decode("utf-8")
+                classSpecies = json.loads(classSpecies)
+                species = classSpecies["species"]
+                list_names = []
+                limit = arguments["limit"][0]
+                for c in species:
+                    list_names.append(c["display_name"])
+                    wanted_names = list_names[0:int(limit)]
+                contents = read_html_file("index-basic.html").render(context={"limit": limit,
+                                                                              "total_list": list_names,
+                                                                              "wanted_list": wanted_names})
 
 
 
 
-        #elif self.path.startswith("/echo?msg"):
-            #message = self.path.split("?msg=")[1]
-            #contents = Path("template.html").read_text().format(message.upper())
+
+            except ConnectionRefusedError:
+                print("ERROR! Cannot connect to the Server")
+                exit()
+
+
         else:
             contents = Path("error.html").read_text()
 

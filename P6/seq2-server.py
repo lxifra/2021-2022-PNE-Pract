@@ -25,14 +25,14 @@ def info(sequence):
     sequence_name = "Sequence: " + sequence
     sequence_lenght = "Total lenght: " + str(len(sequence))
     d = {"A": 0, "C": 0, "G": 0, "T": 0}
-    message = ""
+    message = []
     for bases in sequence:
         d[bases] += 1
     total = sum(d.values())  # te da solo los valores sin las keys
     for base, count in d.items():  # te da tanto las keys como sus valores
         perc = str((count * 100) / total)
         d[base] = [str(count), str(perc)]
-        message += str(base) + ": " + str(d[base][0]) + " (" + str((d[base][1])) + "%)" + "\n"
+        message.append(str(base) + ": " + str(d[base][0]) + " (" + str((d[base][1])) + "%)")
     return sequence_name, sequence_lenght, message
 
 def complement(sequence):
@@ -91,11 +91,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             if operation == "Info":
                 sname, slenght, msg = info(sequence)
                 print(msg)
-                result = sname + "\n" + slenght + "\n" + msg
-                contents = read_html_file("operation.html").render(context={"sequence": sequence,
+                result = [sname, slenght]
+                print(result)
+                contents = read_html_file("info.html").render(context={"sequence": sequence,
                                                                             "operationtype": operation,
-                                                                            "result": sname
-                                                                                      + "\n" + str(msg)})
+                                                                            "result": result,
+                                                                       "msg": msg
+                                                                       })
 
             elif operation == "Comp":
                 comp_seq = complement(sequence)

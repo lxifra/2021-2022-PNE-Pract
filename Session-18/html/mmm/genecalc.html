@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Total length of the sequence: {{context.totallen}}
+<br>
+Percentages of the basis:
+<br>
+{% for c in context.genecalc %}
+<p>{{c}}</p>
+{% endfor %}
+</body>
+</html>

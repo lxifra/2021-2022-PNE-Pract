@@ -16,13 +16,13 @@ def read_html_file(filename):
     contents = j.Template(contents)
     return contents
 
-def request_json(endpoint):
+def request_json(endpoint, parameter):
     SERVER = 'rest.ensembl.org'
     PARAMS = "?content-type=application/json"
 
     conn = http.client.HTTPConnection(SERVER)
     try:
-        conn.request("GET", endpoint + PARAMS)
+        conn.request("GET", endpoint + parameter + PARAMS)
         r1 = conn.getresponse()
         print(f"Response received!: {r1.status} {r1.reason}\n")
 
@@ -52,7 +52,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         elif self.path.startswith("/listSpecies?"):
             ENDPOINT = "info/species"
 
-            classSpecies = request_json(ENDPOINT)
+            classSpecies = request_json(ENDPOINT, "")
             info_species = classSpecies["species"]
             list_names = []
 
@@ -72,7 +72,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         elif self.path.startswith("/karyotype?"):
             ENDPOINT = "info/assembly/"
             specie = arguments["specie"][0]
-            classSpecies = request_json(ENDPOINT + specie)
+            classSpecies = request_json(ENDPOINT, specie)
             try:
                 karyotype = classSpecies["karyotype"]
                 contents = read_html_file("karyotype.html").render(context={"karyotype": karyotype})
@@ -85,7 +85,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             specie = arguments["species"][0]
             chromosome = arguments["chromosome"][0]
-            classSpecies = request_json(ENDPOINT + specie)
+            classSpecies = request_json(ENDPOINT, specie)
             try:
                 if int(chromosome) >= len(classSpecies["top_level_region"]):
                     contents = "This number is too big."

@@ -46,7 +46,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
 
         if self.path == "/":
-            contents = read_html_file("index-basic.html").render(context={})
+            contents = read_html_file("html/index-basic.html").render(context={})
 
 
         elif self.path.startswith("/listSpecies?"):
@@ -65,7 +65,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 limit = len(list_names)
                 wanted_names = list_names[0:int(limit)]
 
-            contents = read_html_file("listSpecies.html").render(context={"limit": limit,
+            contents = read_html_file("html/listSpecies.html").render(context={"limit": limit,
                                                                               "total_lenght": len(list_names),
                                                                               "wanted_list": wanted_names})
 
@@ -75,9 +75,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             classSpecies = request_json(ENDPOINT, specie)
             try:
                 karyotype = classSpecies["karyotype"]
-                contents = read_html_file("karyotype.html").render(context={"karyotype": karyotype})
+                contents = read_html_file("html/karyotype.html").render(context={"karyotype": karyotype})
             except KeyError:
-                contents = Path("error.html").read_text()
+                contents = Path("html/error.html").read_text()
 
 
         elif self.path.startswith("/lenght?"):
@@ -88,16 +88,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             classSpecies = request_json(ENDPOINT, specie)
             try:
                 if int(chromosome) >= len(classSpecies["top_level_region"]):
-                    contents = "This number is too big."
+                    contents = Path("html/error.html").read_text()
                 else:
                     chromosome_dict = classSpecies["top_level_region"][int(chromosome)]
                     lenght = chromosome_dict["length"]
-                    contents = read_html_file("chromosomelenght.html").render(context={"c_lenght": lenght})
+                    contents = read_html_file("html/chromosomelenght.html").render(context={"c_lenght": lenght})
             except KeyError:
-                contents = Path("error.html").read_text()
+                contents = Path("html/error.html").read_text()
 
         else:
-            contents = Path("error.html").read_text()
+            contents = Path("html/error.html").read_text()
 
 
 

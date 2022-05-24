@@ -44,12 +44,15 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         url = urlparse(self.path)
         arguments = parse_qs(url.query)
 
+        list_resource = self.path.split('?')
+        path = list_resource[0]
 
-        if self.path == "/":
+
+        if path == "/":
             contents = read_html_file("html/index-basic.html").render(context={})
 
 
-        elif self.path.startswith("/listSpecies?"):
+        elif path == "/listSpecies":
             ENDPOINT = "info/species"
 
             classSpecies = request_json(ENDPOINT, "")
@@ -69,7 +72,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                                                               "total_lenght": len(list_names),
                                                                               "wanted_list": wanted_names})
 
-        elif self.path.startswith("/karyotype?"):
+        elif path == "/karyotype":
             ENDPOINT = "info/assembly/"
             specie = arguments["specie"][0]
             classSpecies = request_json(ENDPOINT, specie)
@@ -80,7 +83,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 contents = Path("html/error.html").read_text()
 
 
-        elif self.path.startswith("/lenght?"):
+        elif path == "/lenght":
             ENDPOINT = "info/assembly/"
 
             specie = arguments["species"][0]

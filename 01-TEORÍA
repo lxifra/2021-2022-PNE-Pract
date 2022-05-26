@@ -1,0 +1,9 @@
+CLIENT = browser/app
+Web pages: SERVER--BROWSER (client)
+REST API: SERVER-- APP(client)
+
+listas ordenadas en html: <ol></ol>
+listas no ordenadas en html (con puntos): <ul></ul>
+
+Para introducir links: <a href=(link)>NOMBRE</a>
+a es una etiqueta y href un atributo.

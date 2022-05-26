@@ -1,0 +1,2 @@
+contents = read_html_file("operation.html3").render(context ={""})
+contents = Path("template.html3").read_text().format(message.upper())

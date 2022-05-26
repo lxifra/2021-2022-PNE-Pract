@@ -1,0 +1,14 @@
+ENDPOINTS USED:
+- GET info/species : with this endpoint we obtain a dictionary with a list of species and their
+characteristics. To obtain the name of the specie, we use they key "display_name". This endpoint is used
+with the path "/listSpecies".
+
+-GET info/assembly: it gives us a dictionary with the characteristics of a specific specie. To obtain the
+karyotype we use the key "karyotype" and to obtain the lenght of the chromosome we used the key
+"top_level_regions" and inside it we used the key "length".
+
+-GET "sequence/id": it gives us a dictionary with information about a specific gene. To get the sequence, we
+need the key "seq". To get the information about the chromosome we need the key "desc".
+
+-GET "/phenotype/region/homo_sapiens/": information of the phenotype of a specific specie. We need the keys
+"phenotype_associations", "attributes" and "associated_gene" to get the list of the associated genes.

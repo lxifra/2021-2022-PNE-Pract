@@ -62,7 +62,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             #el render para jinja es como el format para lo normal
 
         elif self.path == "/ping?":
-            contents = read_html_file(self.path[1:-1] + ".html3").render()
+            contents = read_html_file(self.path[1:-1] + ".html").render()
 
         elif self.path.startswith("/get?"):
             #&number=value
@@ -138,7 +138,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         self.send_response(200)  # -- Status line: OK!
 
         # Define the content-type header:
-        self.send_header('Content-Type', 'text/html3')
+        self.send_header('Content-Type', 'text/html')
         self.send_header('Content-Length', len(str.encode(contents)))
 
         # The header is finished

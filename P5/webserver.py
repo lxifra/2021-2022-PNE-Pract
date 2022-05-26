@@ -17,11 +17,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         path = self.requestline.split(" ")[1]
 
 
-        if path == "/" or path == "/index.html3":
+        if path == "/" or path == "/index.html":
             contents = pathlib.Path("info/index.html").read_text()
         else:
             try:
-                FILENAME = str(path) + ".html3"
+                FILENAME = str(path) + ".html"
                 contents = pathlib.Path(FILENAME.strip("/")).read_text()
             except FileNotFoundError:
                 contents = pathlib.Path("info/error.html").read_text()
@@ -29,7 +29,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         self.send_response(200)
 
-        self.send_header('Content-Type', 'text/html3')
+        self.send_header('Content-Type', 'text/html')
         self.send_header('Content-Length', len(contents.encode()))
 
         self.end_headers()

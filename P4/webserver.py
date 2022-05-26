@@ -40,7 +40,7 @@ def process_client(s):
 
     status_line = "HTTP/1.1 200 OK\n"
 
-    header = "Content-Type: text/html\n"
+    header = "Content-Type: text/html3\n"
 
     header += f"Content-Length: {len(body)}\n"
 

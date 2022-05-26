@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Karyotype</title>
 </head>
 <body style="background-color: lightblue;">
 The names of the chromosome are:
 {% for c in context.karyotype %}
 <p>{{c}}</p>
 {% endfor %}
+<br>
+<a href="/">Main Page</a>
 </body>
 </html>

@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>GeneList</title>
 </head>
-<body>
+<body style="background-color: mediumspringgreen;">
 This region contains the following genes:
 {% for g in context.gene_list %}
-<p>{{g}}</p>
+<ul>
+    <li>{{g}}</li>
+</ul>
 {% endfor %}
-
+<br>
+<a href="/">Main Page</a>
 </body>
 </html>

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>GeneCalc</title>
 </head>
-<body>
+<body style="background-color: lightgreen;">
 Total length of the sequence: {{context.totallen}}
 <br>
 Percentages of the basis:
@@ -12,5 +12,7 @@ Percentages of the basis:
 {% for c in context.genecalc %}
 <p>{{c}}</p>
 {% endfor %}
+<br>
+<a href="/">Main Page</a>
 </body>
 </html>

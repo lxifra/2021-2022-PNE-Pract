@@ -1,12 +1,8 @@
 ENDPOINTS USED:
-- GET info/species : con este parametro obtenemos un enorme diccionario con distintas listas con especies y
-sus características. Para obtener el nombre de las especies solamente, utilizamos la key "display_name" y
-nos devolverá solo los nombres de las especies, los cuales meteremos en una lista.
+- GET info/species : with this endpoint we obtain a dictionary with a list of species and their
+characteristics. To obtain the name of the specie, we use they key "display_name". This endpoint is used
+with the path "/listSpecies".
 
--GET info/assembly: obtenemos un diccionario con características de una especie específica, como el número de
-cromosomas, su nombre, etc. Para obtener la información del kariotipo hemos utilizado la key "karyotype".
-
--GET info/assembly: para obtener la información de la longitud del cromosoma hemos utilizado la key
-"top_level_regions". Dentro de esta se encunetra una lista de diccionarios de distintos cromosomas. Elegimos
-el diccionario que sea el número de cromosoma que hemos puesto y utilizamos la key "lenght" para sacar la
-longitud del cromosoma.
+-GET info/assembly: it gives us a dictionary with the characteristics of a specific specie. To obtain the
+karyotype we use the key "karyotype" and to obtain the lenght of the chromosome we used the key
+"top_level_regions" and inside it we used the key "length".

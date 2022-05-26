@@ -47,6 +47,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         list_resource = self.path.split('?')
         path = list_resource[0]
 
+        contents = ""
+
 
         if path == "/":
             contents = read_html_file("html/index-basic.html").render(context={})
@@ -54,7 +56,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         elif path == "/listSpecies":
             ENDPOINT = "info/species"
-
             classSpecies = request_json(ENDPOINT, "")
             info_species = classSpecies["species"]
             list_names = []
@@ -62,13 +63,19 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             for c in info_species:
                 list_names.append(c["display_name"])
             try:
-                limit = arguments["limit"][0]
-                wanted_names = list_names[0:int(limit)]
+                try:
+                    limit = int(arguments["limit"][0])
+                    wanted_names = list_names[0:int(limit)]
+                except ValueError:
+                    wanted_names = []
             except KeyError:
                 limit = len(list_names)
                 wanted_names = list_names[0:int(limit)]
 
-            contents = read_html_file("html/listSpecies.html").render(context={"limit": limit,
+            if len(wanted_names) == 0:
+                contents = read_html_file("html/error.html").render(context={"msg": "The limit value is wrong."})
+            else:
+                contents = read_html_file("html/listSpecies.html").render(context={"limit": limit,
                                                                               "total_lenght": len(list_names),
                                                                               "wanted_list": wanted_names})
 
@@ -80,33 +87,39 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 karyotype = classSpecies["karyotype"]
                 contents = read_html_file("html/karyotype.html").render(context={"karyotype": karyotype})
             except KeyError:
-                contents = Path("html/error.html").read_text()
+                contents = read_html_file("html/error.html").render(context={
+                    "msg": "The specie selected is not available."})
 
 
         elif path == "/lenght":
             ENDPOINT = "info/assembly/"
-
-            specie = arguments["species"][0]
-            chromosome = arguments["chromosome"][0]
-            classSpecies = request_json(ENDPOINT, specie)
             try:
-                if int(chromosome) >= len(classSpecies["top_level_region"]):
-                    contents = Path("html/error.html").read_text()
-                else:
-                    chromosome_dict = classSpecies["top_level_region"][int(chromosome)]
-                    lenght = chromosome_dict["length"]
-                    contents = read_html_file("html/chromosomelenght.html").render(context={"c_lenght": lenght})
-            except KeyError:
-                contents = Path("html/error.html").read_text()
+                specie = arguments["species"][0]
+                chromosome = arguments["chromosome"][0]
+                classSpecies = request_json(ENDPOINT, specie)
+                try:
+                    if int(chromosome) >= len(classSpecies["top_level_region"]):
+                        contents = read_html_file("html/error.html").render(
+                            context={"msg": "The chromosome selected is not available."})
+                    else:
+                        chromosome_dict = classSpecies["top_level_region"][int(chromosome)]
+                        lenght = chromosome_dict["length"]
+                        contents = read_html_file("html/chromosomelenght.html").render(context={"c_lenght": lenght})
+                except KeyError:
+                    contents = read_html_file("html/error.html").render(context={"msg": "The specie selected is not available."})
+            except ValueError:
+                contents = read_html_file("html/error.html").render(context={"msg": "The chromosome selected is not available."})
 
         else:
-            contents = Path("html/error.html").read_text()
+            contents = read_html_file("html/error.html").render(context={"msg": "Resource not available."})
+
+
 
 
 
         self.send_response(200)
 
-        self.send_header('Content-Type', 'text/html')
+        self.send_header('Content-Type', 'text/html3')
         self.send_header('Content-Length', len(str.encode(contents)))
 
         self.end_headers()

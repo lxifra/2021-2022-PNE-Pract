@@ -16,14 +16,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         termcolor.cprint(self.requestline, 'green')
         path = self.requestline.split(" ")[1]
 
-        if path == "/" or path == "/index.html":
+        if path == "/" or path == "/index.html3":
             contents = pathlib.Path("info/index.html").read_text()
         else:
             contents = pathlib.Path("info/error.html").read_text()
 
         self.send_response(200)
 
-        self.send_header('Content-Type', 'text/html')
+        self.send_header('Content-Type', 'text/html3')
         self.send_header('Content-Length', len(contents.encode()))
 
         self.end_headers()

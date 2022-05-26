@@ -95,31 +95,43 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             ENDPOINT = "info/assembly/"
             try:
                 specie = arguments["species"][0]
-                chromosome = arguments["chromosome"][0]
+                chromosome = arguments["number"][0]
                 classSpecies = request_json(ENDPOINT, specie)
+                list_names = []
                 try:
-                    if int(chromosome) >= len(classSpecies["top_level_region"]):
+                    top_level_region = classSpecies["top_level_region"]
+                    if int(chromosome) < 0:
                         contents = read_html_file("html/error.html").render(
                             context={"msg": "The chromosome selected is not available."})
                     else:
-                        chromosome_dict = classSpecies["top_level_region"][int(chromosome)]
-                        lenght = chromosome_dict["length"]
-                        contents = read_html_file("html/chromosomelenght.html").render(context={"c_lenght": lenght})
+                        for elements in top_level_region:
+                            length = elements["length"]
+                            if "chromosome" in elements["coord_system"]:
+                                name = elements["name"]
+                                if int(length) >= int(chromosome):
+                                    list_names.append(name)
+                        if len(list_names) == 0:
+                            contents = read_html_file("html/error.html").render(
+                                context={"msg": "There are no chromosomes with a length bigger."})
+                        else:
+                            contents = read_html_file("html/chromosomelenght.html").render(
+                                context={"list_names": list_names})
                 except KeyError:
-                    contents = read_html_file("html/error.html").render(context={"msg": "The specie selected is not available."})
+                    contents = read_html_file("html/error.html").render(
+                        context={"msg": "The specie selected is not available."})
             except ValueError:
                 contents = read_html_file("html/error.html").render(context={"msg": "The chromosome selected is not available."})
+
+
 
         else:
             contents = read_html_file("html/error.html").render(context={"msg": "Resource not available."})
 
 
 
-
-
         self.send_response(200)
 
-        self.send_header('Content-Type', 'text/html3')
+        self.send_header('Content-Type', 'text/html')
         self.send_header('Content-Length', len(str.encode(contents)))
 
         self.end_headers()

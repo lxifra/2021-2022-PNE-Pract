@@ -5,8 +5,12 @@
     <title>C.Length</title>
 </head>
 <body style="background-color: cadetblue;">
-The lenght of the selected chromosome is:
-{{context.c_lenght}}
+The chromosomes that have bigger length are:
+{% for c in context.list_names %}
+<ul>
+    <li>{{c}}</li>
+</ul>
+{% endfor %}
 <br>
 <a href="/">Main Page</a>
 </body>
